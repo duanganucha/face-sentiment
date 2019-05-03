@@ -1,0 +1,77 @@
+<ion-header>
+    <ion-toolbar color="secondary">
+        <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+        </ion-buttons>
+
+        <ion-title>วิเคราะห์ใบหน้า</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content text-center>
+
+    <ion-img src="{{image}}" style=" height : 200px;">
+    </ion-img>
+
+    <ion-grid padding>
+        <ion-row>
+            <ion-col size="6">
+                <!-- <ion-card> -->
+                <ion-button [disabled]="isUploading" expand="round" fill="outline" (click)="onCamera()" color="danger"
+                    routerDirection="forward">
+                    <ion-icon slot="icon-only" name="camera"></ion-icon>
+                    กล้อง
+                </ion-button>
+                <!-- </ion-card> -->
+            </ion-col>
+            <ion-col size="6">
+                <!-- <ion-card> -->
+                <ion-button [disabled]="isUploading" expand="round" fill="outline" (click)="onUploadPhoto()"
+                    color="primary" routerDirection="forward">
+                    <ion-icon slot="icon-only" name="arrow-round-up"></ion-icon>
+                    Upload
+                </ion-button>
+                <!-- </ion-card> -->
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+    <!-- Upload Form Url -->
+    <!-- <ion-grid padding>
+        <ion-row>
+            <ion-col size="12">
+                <ion-input type="text" [(ngModel)]="imageUrl " placeholder="Enter a url" (ngModelChange)="onChangeUrl(imageUrl)"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+                <ion-button name="arrow-round-up" (click)="getPersonApi(imageUrl)">
+                    <ion-icon slot="icon-only" name="camera"></ion-icon>
+                    UploadURL
+                </ion-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid> -->
+
+    <progress-bar [progress]="[progressValue]" [color]="'#488aff'" *ngIf="isUploading">
+    </progress-bar>
+
+    <ion-spinner name="circles"  *ngIf="!isUploading && isAnalysis"></ion-spinner>
+
+    <ion-card>
+        <ion-card-header>
+            <ion-text color="primary">
+                ผลการวิเคราะห์
+            </ion-text>
+        </ion-card-header>
+        <ion-grid>
+            <ion-row>
+                <ion-col size="4" *ngFor="let motion of motions">
+                    <ngx-gauge [type]="gaugeType" [thick]="gaugeThick" [value]="motion.value * 100"
+                        [thresholds]="gaugethresholds" [max]="gaugemax" [size]="size" [label]="motion.name"
+                        [append]="gaugeAppendText">
+                    </ngx-gauge>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
+
+</ion-content>
